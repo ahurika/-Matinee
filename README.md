@@ -10,6 +10,7 @@
 
 ## 1. Quick Links & Artifacts
 
+- **GitHub Repository:** [https://github.com/ahurika/-Matinee](https://github.com/ahurika/-Matinee)
 - **Android Dev Build APK:** [Download Android Development Build](https://expo.dev/artifacts/eas/matinee-dev-client.apk)
 - **Deployed Backend URL:** `https://api.matinee.app` (Staging: `http://localhost:3000`)
 - **Figma Design System & Screens:** [Matinee Design Tokens & Screen Flows (Figma)](https://figma.com/@kate/matinee-design-system)
