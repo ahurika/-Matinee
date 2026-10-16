@@ -18,7 +18,7 @@ const queryClient = new QueryClient({
 });
 
 export default function RootLayout() {
-  const [loaded] = useFonts({
+  const [loaded, error] = useFonts({
     Manrope_400Regular,
     Manrope_500Medium,
     Manrope_600SemiBold,
@@ -31,7 +31,7 @@ export default function RootLayout() {
     void initializeAuth();
   }, [initializeAuth]);
 
-  if (!loaded) return null;
+  if (!loaded && !error) return null;
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
