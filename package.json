@@ -1,0 +1,30 @@
+{
+  "name": "matinee",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cinema ticket booking app with high concurrency seat holds",
+  "workspaces": [
+    "server",
+    "app"
+  ],
+  "scripts": {
+    "db:up": "docker compose up -d",
+    "dev:server": "npm --prefix server run dev",
+    "dev:app": "npm --prefix app run dev",
+    "db:migrate": "npm --prefix server run db:migrate",
+    "db:seed": "npm --prefix server run db:seed",
+    "test": "npm --prefix server run test",
+    "lint": "npm --prefix server run lint",
+    "loadtest": "k6 run load-tests/hold-race.js"
+  },
+  "keywords": [
+    "cinema",
+    "booking",
+    "hono",
+    "expo",
+    "redis",
+    "postgres"
+  ],
+  "author": "Kate Ahurika",
+  "license": "UNLICENSED"
+}

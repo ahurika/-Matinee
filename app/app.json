@@ -1,0 +1,22 @@
+{
+  "expo": {
+    "name": "Matinee",
+    "slug": "matinee",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "matinee",
+    "userInterfaceStyle": "dark",
+    "newArchEnabled": true,
+    "splash": {
+      "backgroundColor": "#181210"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      "expo-secure-store"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

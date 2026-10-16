@@ -1,0 +1,15 @@
+# Local services for Matinee. Passwords here are for local development only.
+services:
+  pg:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: matinee
+      POSTGRES_PASSWORD: matinee_local_only
+      POSTGRES_DB: matinee
+    ports: ["5450:5432"]
+    volumes: ["pgdata:/var/lib/postgresql/data"]
+  redis:
+    image: redis:7
+    ports: ["6390:6379"]
+volumes:
+  pgdata:

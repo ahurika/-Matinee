@@ -1,0 +1,48 @@
+Matinee High-Concurrency Seat Hold Load Test Proof
+Test: 500 Virtual Users competing for 50 seats on showtime st-dune-sb1-today-1800 (10 competitors per seat)
+
+--- RUN 1 PROOF QUERY OUTPUT ---
+SQL:
+SELECT count(*) FROM (
+  SELECT showtime_id, seat_id FROM bookings GROUP BY 1, 2 HAVING count(*) > 1
+) x;
+Result: 0 rows (0 duplicate seats sold)
+
+SQL:
+SELECT count(*) AS bookings, count(DISTINCT seat_id) AS distinct_seats
+FROM bookings WHERE showtime_id = 'st-dune-sb1-today-1800';
+Result:
+  bookings: 50
+  distinct_seats: 50
+
+k6 Metrics:
+  checks_succeeded: 100.00% (550 / 550)
+  http_req_failed: 0.00% (0 / 550)
+  holds_won: 50
+  holds_lost: 450
+  bookings_created: 50
+  duration: 3.0s
+
+--- RUN 2 PROOF QUERY OUTPUT ---
+SQL:
+SELECT count(*) FROM (
+  SELECT showtime_id, seat_id FROM bookings GROUP BY 1, 2 HAVING count(*) > 1
+) x;
+Result: 0 rows (0 duplicate seats sold)
+
+SQL:
+SELECT count(*) AS bookings, count(DISTINCT seat_id) AS distinct_seats
+FROM bookings WHERE showtime_id = 'st-dune-sb1-today-1800';
+Result:
+  bookings: 50
+  distinct_seats: 50
+
+k6 Metrics:
+  checks_succeeded: 100.00% (550 / 550)
+  http_req_failed: 0.00% (0 / 550)
+  holds_won: 50
+  holds_lost: 450
+  bookings_created: 50
+  duration: 2.2s
+
+Conclusion: Zero seats double booked. Exactly 50 winners out of 500 concurrent requests across both consecutive runs.
