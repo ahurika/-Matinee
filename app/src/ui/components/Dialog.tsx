@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     padding: space[4],
   },
   scrim: {
-    ...StyleSheet.absoluteFillObject,
+    ...(StyleSheet.absoluteFill as object),
     backgroundColor: 'rgba(0, 0, 0, 0.55)',
   },
   dialogCard: {

@@ -1,3 +1,7 @@
+---
+description: Help the human learn what was just built. The human must be able to explain every line in an interview.
+---
+
 # /explain-back
 
 Help the human learn what was just built. The human must be able to explain every line in an interview.

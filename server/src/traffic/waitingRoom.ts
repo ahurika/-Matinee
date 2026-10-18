@@ -33,7 +33,16 @@ local free = tonumber(ARGV[2]) - redis.call('ZCARD', KEYS[2])
 local n = math.min(tonumber(ARGV[3]), free)
 local admitted = {}
 if n <= 0 then return admitted end
-local popped = redis.call('ZPOPMIN', KEYS[1], n)
+local popped
+local ok, res = pcall(redis.call, 'ZPOPMIN', KEYS[1], n)
+if ok then
+  popped = res
+else
+  popped = redis.call('ZRANGE', KEYS[1], 0, n - 1, 'WITHSCORES')
+  for i = 1, #popped, 2 do
+    redis.call('ZREM', KEYS[1], popped[i])
+  end
+end
 for i = 1, #popped, 2 do
   redis.call('ZADD', KEYS[2], tonumber(ARGV[1]) + tonumber(ARGV[4]), popped[i])
   admitted[#admitted + 1] = popped[i]

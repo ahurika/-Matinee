@@ -14,7 +14,7 @@
     "db:migrate": "npm --prefix server run db:migrate",
     "db:seed": "npm --prefix server run db:seed",
     "test": "npm --prefix server run test",
-    "lint": "npm --prefix server run lint",
+    "lint": "npm --prefix server run lint && npm --prefix app run lint",
     "loadtest": "k6 run load-tests/hold-race.js"
   },
   "keywords": [

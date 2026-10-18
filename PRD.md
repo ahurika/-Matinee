@@ -5,7 +5,7 @@
 | Product | Matinee, a cinema ticket booking app |
 | Version | 1.0 (draft) |
 | Date | 15 October 2026 |
-| Owner | Kate Ahurika |
+| Owner | Kate Eze|
 | Context | Graduation task, Part 2, Task B (Dev and Design HQ) |
 | Deadline | Monday, 19 October 2026 |
 | Status | Ready for build |

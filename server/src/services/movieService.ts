@@ -6,6 +6,7 @@ import {
   TmdbClient,
   TmdbUnavailable,
 } from '../integrations/tmdb/tmdbClient.js';
+import { pool } from '../lib/db.js';
 import { AppError } from '../lib/errors.js';
 import { redis } from '../lib/redis.js';
 import { movieRepository } from '../repositories/movieRepository.js';
@@ -38,6 +39,14 @@ export class MovieService {
       });
       return { items: res.data, stale: res.stale };
     } catch (err) {
+      // Fallback to database snapshots if TMDB is down/unconfigured and cache is empty
+      const { rows } = await pool.query<{ data: Movie }>(
+        `SELECT data FROM movie_snapshots ORDER BY fetched_at DESC LIMIT 20`,
+      );
+      if (rows.length > 0) {
+        return { items: rows.map((r) => r.data), stale: true };
+      }
+
       if (err instanceof TmdbUnavailable) {
         throw new AppError('UPSTREAM_TIMEOUT', 'Movie service temporarily unavailable', 503);
       }
@@ -60,6 +69,14 @@ export class MovieService {
       });
       return { items: res.data, stale: res.stale };
     } catch (err) {
+      // Fallback to database snapshots if TMDB is down/unconfigured and cache is empty
+      const { rows } = await pool.query<{ data: Movie }>(
+        `SELECT data FROM movie_snapshots ORDER BY fetched_at DESC LIMIT 20`,
+      );
+      if (rows.length > 0) {
+        return { items: rows.map((r) => r.data), stale: true };
+      }
+
       if (err instanceof TmdbUnavailable) {
         throw new AppError('UPSTREAM_TIMEOUT', 'Movie service temporarily unavailable', 503);
       }

@@ -1,3 +1,5 @@
+import Constants from 'expo-constants';
+import { Platform } from 'react-native';
 import { tokenStorage } from './tokenStorage';
 
 export class ApiError extends Error {
@@ -16,14 +18,34 @@ export class ApiError extends Error {
   }
 }
 
-const getApiBaseUrl = (): string => {
-  if (process.env.EXPO_PUBLIC_API_URL) {
-    return process.env.EXPO_PUBLIC_API_URL;
+export const getApiBaseUrl = (): string => {
+  const configured = process.env.EXPO_PUBLIC_API_URL;
+  
+  // On web, if configured use configured, else default to localhost:3000
+  if (Platform.OS === 'web') {
+    return configured || 'http://localhost:3000';
   }
-  return 'http://localhost:3000';
-};
 
-const BASE_URL = getApiBaseUrl();
+  // If explicitly configured with a non-localhost IP or domain, use it
+  if (configured && !configured.includes('localhost') && !configured.includes('127.0.0.1')) {
+    return configured;
+  }
+
+  // On native mobile devices in development (Expo Go or dev client),
+  // dynamically extract the host machine's LAN IP from the Expo bundler connection
+  const hostUri =
+    Constants.expoConfig?.hostUri ||
+    (Constants as any).manifest?.debuggerHost ||
+    (Constants as any).manifest2?.extra?.expoGo?.debuggerHost;
+  if (hostUri) {
+    const host = hostUri.split(':')[0];
+    if (host) {
+      return `http://${host}:3000`;
+    }
+  }
+
+  return configured || 'http://localhost:3000';
+};
 
 type RequestOptions = RequestInit & {
   skipAuth?: boolean;
@@ -36,7 +58,8 @@ async function refreshAccessToken(): Promise<string | null> {
   if (!refreshToken) return null;
 
   try {
-    const res = await fetch(`${BASE_URL}/v1/auth/refresh`, {
+    const baseUrl = getApiBaseUrl();
+    const res = await fetch(`${baseUrl}/v1/auth/refresh`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ refreshToken }),
@@ -71,7 +94,8 @@ export async function apiClient<T>(endpoint: string, options: RequestOptions = {
     }
   }
 
-  const url = `${BASE_URL}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
+  const baseUrl = getApiBaseUrl();
+  const url = `${baseUrl}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
 
   let res: Response;
   try {

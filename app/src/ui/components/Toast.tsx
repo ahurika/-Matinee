@@ -44,7 +44,7 @@ const ToastContext = createContext<ToastContextValue | null>(null);
 export function ToastProvider({ children }: { children: ReactNode }) {
   const [current, setCurrent] = useState<ToastOptions | null>(null);
   const queueRef = useRef<ToastOptions[]>([]);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const processNext = useCallback(() => {
     if (queueRef.current.length > 0) {

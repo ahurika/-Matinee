@@ -1,6 +1,10 @@
+---
+description:  Plan one Matinee feature before writing code. Use at the start of every task.
+---
+
 # /plan-feature
 
-Plan one Rota feature before writing code. Use at the start of every task.
+Plan one  Matinee feature before writing code. Use at the start of every task.
 
 1. Read `PRD.md` and find the requirement IDs this task covers (for example FR-F2, FR-B4).
 2. List the matching skills in `.agents/skills/` and read them.

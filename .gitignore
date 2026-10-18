@@ -10,3 +10,6 @@ build/
 google-services.json
 *.jks
 *.keystore
+*.rdb
+.idea/
+.vscode/

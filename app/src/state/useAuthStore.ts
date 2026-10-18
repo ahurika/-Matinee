@@ -24,8 +24,9 @@ export const useAuthStore = create<AuthState>((set) => ({
 
   initialize: async () => {
     try {
-      const token = await tokenStorage.getAccessToken();
-      if (!token) {
+      const accessToken = await tokenStorage.getAccessToken();
+      const refreshToken = await tokenStorage.getRefreshToken();
+      if (!accessToken && !refreshToken) {
         set({ user: null, isAuthenticated: false, isLoading: false });
         return;
       }
