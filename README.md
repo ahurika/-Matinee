@@ -95,3 +95,15 @@ npm run test
 # 6. Execute 500 VUs k6 seat hold load test
 npm run loadtest
 ```
+
+---
+
+## 7. Data Attribution & TMDB Compliance
+
+<p align="left">
+  <img src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_short-8e7b30f73a4020692ccca9c88bafe5dcb6f8a62a4c6bc8de971e3e449ac4bce6.png" alt="The Movie Database Logo" width="130" />
+</p>
+
+This product uses the TMDB API but is not endorsed or certified by TMDB. All film artwork, release schedules, cast details, and synopses are provided through TMDB.
+
+*Commercial Use Note:* The free TMDB API tier is utilized strictly for non-commercial educational, testing, and portfolio assessment purposes. Commercial deployment requires an enterprise licensing agreement with TMDB as detailed in [`docs/decisions/ADR-003-tmdb-terms.md`](file:///c:/Users/USER/Desktop/Matinee/docs/decisions/ADR-003-tmdb-terms.md).

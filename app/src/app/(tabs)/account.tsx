@@ -1,4 +1,5 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Image } from 'expo-image';
 import { router } from 'expo-router';
 import { useState } from 'react';
 import {
@@ -106,10 +107,15 @@ export default function AccountScreen() {
       </View>
 
       <Card variant="outlined" style={styles.card}>
-        <View style={{ gap: space[2] }}>
-          <Text variant="label" color="onSurface">
-            The Movie Database (TMDB)
-          </Text>
+        <View style={{ gap: space[3] }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: space[3] }}>
+            <Image
+              source={{ uri: 'https://www.themoviedb.org/assets/2/v4/logos/v2/blue_short-8e7b30f73a4020692ccca9c88bafe5dcb6f8a62a4c6bc8de971e3e449ac4bce6.png' }}
+              style={{ width: 100, height: 20 }}
+              contentFit="contain"
+              accessibilityLabel="The Movie Database Logo"
+            />
+          </View>
           <Text variant="bodySmall" color="onSurfaceVariant">
             This product uses the TMDB API but is not endorsed or certified by TMDB. Film artwork,
             synopses, and metadata are provided by TMDB.

@@ -123,6 +123,11 @@ export async function apiClient<T>(endpoint: string, options: RequestOptions = {
     }
   }
 
+  // Handle 304 Not Modified
+  if (res.status === 304) {
+    return null as unknown as T;
+  }
+
   // Handle non-2xx responses
   if (!res.ok) {
     let errBody: { error?: { code?: string; message?: string; requestId?: string; fields?: Record<string, string> } } = {};

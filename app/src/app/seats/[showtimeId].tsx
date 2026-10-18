@@ -11,6 +11,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import {
   useHoldSeats,
+  useJoinWaitingRoom,
   useReleaseSeats,
   useSeatAvailability,
   useShowtimeDetail,
@@ -53,6 +54,15 @@ export default function SeatSelectionScreen() {
       if (enabled) setShowListPicker(true);
     }).catch(() => {});
   }, []);
+
+  // ADR-002: Waiting room heartbeat every 30 seconds to maintain admission lease
+  const joinMutation = useJoinWaitingRoom(showtimeId);
+  useEffect(() => {
+    const heartbeatTimer = setInterval(() => {
+      joinMutation.mutate();
+    }, 30_000);
+    return () => clearInterval(heartbeatTimer);
+  }, [showtimeId]);
 
   const countdown = useHoldCountdown(expiresAtMs);
   const holdMutation = useHoldSeats(showtimeId);
